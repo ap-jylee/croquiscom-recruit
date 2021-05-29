@@ -183,8 +183,8 @@
   <script>
   jQuery(function($) {
     const table = $('#table').DataTable({
-      // serverSide: true,
-      // processing: true,
+      serverSide: true,
+      processing: true,
       autoWidth: false,
       responsive: true,
       info: false,
@@ -192,25 +192,15 @@
       paging: false,
       searching: false,
       ajax: function(data, callback) {
-        // $.getJSON(`/recommends/${data.search.value}`, function(response) {
-        //   callback({ draw: data.draw, data: response.data.contents });
-        // })
-        const contents = [{
-          no: 1,
-          type: 'whole',
-          startDate: '2021.06.01',
-          endDate: '2021.06.04',
-          usedDays: 4,
-          cancelYn: false,
-          createdDate: '2021.05.30 12:29:56'
-        }];
-        contents.forEach((content) => {
-          content.title = `vacation application - ${content.type} (${content.startDate} ~ ${content.endDate})`;
-        });
-        callback({ draw: data.draw, data: contents });
+        $.getJSON('/vacations', function(response) {
+          response.forEach((content) => {
+            content.title = `vacation application - ${content.vacationType} (${content.vacationStartDate} ~ ${content.vacationEndDate})`;
+          });
+          callback({ draw: data.draw, data: response });
+        })
       },
       columns: [
-        { data: 'no' },
+        { data: 'vacationId' },
         { data: 'title' },
         { data: 'usedDays' },
         { data: 'cancelYn' },

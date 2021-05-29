@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class VacationService {
@@ -18,6 +21,13 @@ public class VacationService {
     public VacationResponse createVacation(VacationRequest request) {
         Vacation persistVacation = vacationRepository.save(request.toVacation());
         return VacationResponse.of(persistVacation);
+    }
+
+    public List<VacationResponse> findAllByMemberId(String memberId) {
+        return vacationRepository.findAllByMemberId(memberId)
+                .stream()
+                .map(VacationResponse::of)
+                .collect(Collectors.toList());
     }
 
 }

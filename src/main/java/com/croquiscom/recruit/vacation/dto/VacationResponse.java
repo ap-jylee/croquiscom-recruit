@@ -20,7 +20,9 @@ public class VacationResponse {
     private Integer usedDays;
     private String comment;
     private Boolean cancelYn;
+    @JsonFormat(pattern = "yyyy.MM.dd hh:MM")
     private LocalDateTime createdDate;
+    @JsonFormat(pattern = "yyyy.MM.dd hh:MM")
     private LocalDateTime modifiedDate;
 
     private VacationResponse(Long vacationId, String memberId, String vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Integer usedDays, String comment, Boolean cancelYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {

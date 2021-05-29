@@ -183,7 +183,7 @@
           url: '/vacations',
           contentType: 'application/json',
         }, JSON.stringify($.extend(formData, dateRangePickerData)), function(response) {
-          console.log(response);
+          location.href = '/';
         });
       });
     });

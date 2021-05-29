@@ -102,53 +102,55 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Application</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="type">type</label>
-                    <select id="type" class="form-control custom-select">
-                      <option selected>whole</option>
-                      <option>half</option>
-                      <option>quarter</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="period">period</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="far fa-calendar-alt"></i>
-                      </span>
-                      </div>
-                      <input type="text" class="form-control float-right" id="period">
+              <form id="applyForm">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Application</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="usedDays">used days</label>
-                    <input id="usedDays" class="form-control-plaintext" value="1" readonly />
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="vacationType">type</label>
+                      <select name="vacationType" class="form-control custom-select" id="vacationType" >
+                        <option value="whole" selected>whole</option>
+                        <option value="half">half</option>
+                        <option value="quarter">quarter</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="period">period</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="far fa-calendar-alt"></i>
+                        </span>
+                        </div>
+                        <input type="text" class="form-control float-right" id="period">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="usedDays">used days</label>
+                      <input name="usedDays" class="form-control-plaintext" value="1" id="usedDays" readonly />
+                    </div>
+                    <div class="form-group">
+                      <label for="comment">comment</label>
+                      <textarea name="comment" class="form-control" rows="4" id="comment"></textarea>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="comment">comment</label>
-                    <textarea id="comment" class="form-control" rows="4"></textarea>
-                  </div>
+                  <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
+                <!-- /.card -->
+              </form>
             </div>
           </div>
           <div class="row">
             <div class="col-12">
-              <a href="#" class="btn btn-secondary">Cancel</a>
-              <input type="submit" value="apply" class="btn btn-success float-right">
+              <a href="/" class="btn btn-secondary">Cancel</a>
+              <input type="submit" value="apply" class="btn btn-success float-right" id="applyButton">
             </div>
           </div>
           <!-- /.row -->
@@ -163,9 +165,27 @@
   <script src="dist/js/adminlte.min.js"></script>
   <script src="plugins/moment/moment.min.js"></script>
   <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="plugins/jquery-serializeObject/jquery.serializeObject.min.js"></script>
   <script>
     jQuery(function($) {
+      const getDateRangePickerData = function() {
+        const data = $('#period').data('daterangepicker');
+        return {
+          vacationStartDate: data.startDate.format('YYYYMMDD'),
+          vacationEndDate: data.endDate.format('YYYYMMDD')
+        };
+      }
       $('#period').daterangepicker();
+      $('#applyButton').click(function() {
+        const formData = $('#applyForm').serializeObject();
+        const dateRangePickerData = getDateRangePickerData();
+        $.post({
+          url: '/vacations',
+          contentType: 'application/json',
+        }, JSON.stringify($.extend(formData, dateRangePickerData)), function(response) {
+          console.log(response);
+        });
+      });
     });
   </script>
 </body>

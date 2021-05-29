@@ -1,10 +1,8 @@
 package com.croquiscom.recruit.vacation.ui;
 
 import com.croquiscom.recruit.vacation.application.VacationService;
-import com.croquiscom.recruit.vacation.domain.VacationRepository;
 import com.croquiscom.recruit.vacation.dto.VacationRequest;
 import com.croquiscom.recruit.vacation.dto.VacationResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -32,6 +30,22 @@ public class VacationController {
     public ResponseEntity<List<VacationResponse>> getVacations(
             Authentication authentication) {
         return ResponseEntity.ok().body(vacationService.findAllByMemberId(authentication.getName()));
+    }
+
+    @PutMapping("cancel/{id}")
+    public ResponseEntity<VacationResponse> cancelVacation(
+            @PathVariable("id") Long vacationId) {
+        return ResponseEntity.ok().body(vacationService.cancelVacation(vacationId));
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity handleIllegalArgsException(IllegalStateException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }

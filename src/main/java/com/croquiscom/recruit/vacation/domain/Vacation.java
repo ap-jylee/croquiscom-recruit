@@ -45,4 +45,15 @@ public class Vacation extends BaseEntity {
         this.cancelYn = cancelYn;
     }
 
+    public Vacation cancel() {
+        if (Boolean.TRUE.equals(cancelYn)) {
+            throw new IllegalStateException("already canceled.");
+        }
+        if (!LocalDate.now().isBefore(vacationStartDate)) {
+            throw new IllegalArgumentException("The cancellation deadline has been exceeded.");
+        }
+        cancelYn = true;
+        return this;
+    }
+
 }

@@ -122,7 +122,7 @@
             </div>
           </div>
           <!-- /.row -->
-          <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+          <div class="modal fade" id="modal" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -133,25 +133,25 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                    <label for="type">type</label>
-                    <input id="type" class="form-control-plaintext" value="whole" readonly />
+                    <label for="vacationType">type</label>
+                    <input class="form-control-plaintext" id="vacationType" readonly />
                   </div>
                   <div class="form-group">
                     <label for="period">period</label>
-                    <input id="period" class="form-control-plaintext" value="2021.06.01 ~ 2021.06.04" readonly />
+                    <input class="form-control-plaintext" id="period" readonly />
                   </div>
                   <div class="form-group">
                     <label for="usedDays">used days</label>
-                    <input id="usedDays" class="form-control-plaintext" value="4" readonly />
+                    <input class="form-control-plaintext" id="usedDays" readonly />
                   </div>
                   <div class="form-group">
                     <label for="comment">comment</label>
-                    <textarea id="comment" class="form-control-plaintext" rows="4">asdfasdfasdf</textarea>
+                    <textarea class="form-control-plaintext" rows="4" id="comment"></textarea>
                   </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
-                  <button type="button" class="btn btn-danger">cancel</button>
+                  <button type="button" class="btn btn-danger" id="cancelButton">cancel</button>
                 </div>
               </div>
               <!-- /.modal-content -->
@@ -180,6 +180,7 @@
   <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   <script src="plugins/jquery-number/jquery.number.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
+  <script src="plugins/moment/moment.min.js"></script>
   <script>
   jQuery(function($) {
     const table = $('#table').DataTable({
@@ -194,6 +195,7 @@
       ajax: function(data, callback) {
         $.getJSON('/vacations', function(response) {
           response.forEach((content) => {
+            console.log(content);
             content.title = `vacation application - ${content.vacationType} (${content.vacationStartDate} ~ ${content.vacationEndDate})`;
           });
           callback({ draw: data.draw, data: response });
@@ -208,9 +210,35 @@
       ]
     });
     $('#table tbody').on('click', 'tr', function () {
-      const data = table.row(this).data();
-
-      $('#modal-default').modal('show');
+      const row = table.row(this).data();
+      $('#vacationType').val(row.vacationType);
+      $('#period').val(`${row.vacationStartDate} ~ ${row.vacationEndDate}`);
+      $('#usedDays').val(row.usedDays);
+      $('#comment').val(row.comment);
+      $('#cancelButton').attr('disabled', function () {
+        if (row.cancelYn) {
+          return true;
+        }
+        if (!moment().isBefore(moment(row.vacationStartDate, 'YYYY.MM.DD'))) {
+          return true;
+        }
+        return false;
+      });
+      $('#modal').modal('show').data('row', row);
+    });
+    $('#cancelButton').click(function () {
+      const row = $('#modal').data('row');
+      $.ajax({
+        url: `/vacations/cancel/${row.vacationId}`,
+        method: 'put',
+        dataType: 'json'
+      })
+      .done(function () {
+        location.reload();
+      })
+      .fail(function (error) {
+        alert(error.responseText);
+      });
     });
   });
   </script>

@@ -1,9 +1,10 @@
 package com.croquiscom.recruit.vacation.ui;
 
-import com.croquiscom.recruit.vacation.dto.VacationResponse;
+import com.croquiscom.recruit.vacation.domain.VacationMock;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +75,7 @@ public class VacationControllerTest {
     @Test
     public void getVacations() {
         // given
-        ExtractableResponse<Response> givenResponse = createDummyVacation();
+        createDummyVacation();
         // when
         ExtractableResponse<Response> response = RestAssured.given().log().all()
                 .auth().basic("user", "1234")
@@ -85,13 +85,26 @@ public class VacationControllerTest {
                 .then().log().all()
                 .extract();
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-//        List<Long> expectedVacationIds = Arrays.asList(givenResponse).stream()
-//                .map(it -> Long.parseLong(it.header("Location").split("/")[2]))
-//                .collect(Collectors.toList());
-//        List<Long> actualVacationIds = response.jsonPath().getList(".", VacationResponse.class).stream()
-//                .map(it -> it.getVacationId())
-//                .collect(Collectors.toList());
-//        assertThat(actualVacationIds).containsAll(expectedVacationIds);
+        List<Long> actualVacationIds = response.jsonPath().getList(".", VacationMock.class).stream()
+                .map(it -> it.getVacationId())
+                .collect(Collectors.toList());
+        assertThat(actualVacationIds).containsAll(Lists.newArrayList(1L));
+    }
+
+    @DisplayName("cancel vacations")
+    @Test
+    public void cancelVacations() {
+        // given
+        createDummyVacation();
+        // when
+        ExtractableResponse<Response> response = RestAssured.given().log().all()
+                .auth().basic("user", "1234")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .put("/vacations/cancel/1")
+                .then().log().all()
+                .extract();
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
 }

@@ -2,9 +2,227 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>vacation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
-<body>
-  index.html
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+            <i class="fas fa-th-large"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link">
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">zigzag</span>
+      </a>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="/" class="nav-link active">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  vacation manager
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/apply.html" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                  vacation apply
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-12">
+              <h1 class="m-0">vacation manager</h1>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-12">
+              <div class="info-box bg-gradient-warning">
+                <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">remaining days</span>
+                  <span class="info-box-number">15</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                  <span class="progress-description">An annual 15 days left.</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <table class="table table-bordered table-hover" id="table">
+                    <thead>
+                      <tr>
+                        <th>no</th>
+                        <th>title</th>
+                        <th>used days</th>
+                        <th>cancel</th>
+                        <th>apply date</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.row -->
+          <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">application</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="type">type</label>
+                    <input id="type" class="form-control-plaintext" value="whole" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="period">period</label>
+                    <input id="period" class="form-control-plaintext" value="2021.06.01 ~ 2021.06.04" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="usedDays">used days</label>
+                    <input id="usedDays" class="form-control-plaintext" value="4" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="comment">comment</label>
+                    <textarea id="comment" class="form-control-plaintext" rows="4">asdfasdfasdf</textarea>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                  <button type="button" class="btn btn-danger">cancel</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+  </div>
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="plugins/jszip/jszip.min.js"></script>
+  <script src="plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <script src="plugins/jquery-number/jquery.number.min.js"></script>
+  <script src="dist/js/adminlte.min.js"></script>
+  <script>
+  jQuery(function($) {
+    const table = $('#table').DataTable({
+      // serverSide: true,
+      // processing: true,
+      autoWidth: false,
+      responsive: true,
+      info: false,
+      ordering: false,
+      paging: false,
+      searching: false,
+      ajax: function(data, callback) {
+        // $.getJSON(`/recommends/${data.search.value}`, function(response) {
+        //   callback({ draw: data.draw, data: response.data.contents });
+        // })
+        const contents = [{
+          no: 1,
+          type: 'whole',
+          startDate: '2021.06.01',
+          endDate: '2021.06.04',
+          usedDays: 4,
+          cancelYn: false,
+          createdDate: '2021.05.30 12:29:56'
+        }];
+        contents.forEach((content) => {
+          content.title = `vacation application - ${content.type} (${content.startDate} ~ ${content.endDate})`;
+        });
+        callback({ draw: data.draw, data: contents });
+      },
+      columns: [
+        { data: 'no' },
+        { data: 'title' },
+        { data: 'usedDays' },
+        { data: 'cancelYn' },
+        { data: 'createdDate' }
+      ]
+    });
+    $('#table tbody').on('click', 'tr', function () {
+      const data = table.row(this).data();
+
+      $('#modal-default').modal('show');
+    });
+  });
+  </script>
 </body>
 </html>

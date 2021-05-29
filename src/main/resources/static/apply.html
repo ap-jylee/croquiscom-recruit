@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vacation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+            <i class="fas fa-th-large"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link">
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">zigzag</span>
+      </a>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="/" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  vacation manager
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/apply.html" class="nav-link active">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                  vacation apply
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-12">
+              <h1 class="m-0">vacation apply</h1>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-12">
+              <div class="info-box bg-gradient-warning">
+                <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">remaining days</span>
+                  <span class="info-box-number">15</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                  <span class="progress-description">An annual 15 days left.</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Application</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="type">type</label>
+                    <select id="type" class="form-control custom-select">
+                      <option selected>whole</option>
+                      <option>half</option>
+                      <option>quarter</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="period">period</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
+                      </div>
+                      <input type="text" class="form-control float-right" id="period">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="usedDays">used days</label>
+                    <input id="usedDays" class="form-control-plaintext" value="1" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="comment">comment</label>
+                    <textarea id="comment" class="form-control" rows="4"></textarea>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a href="#" class="btn btn-secondary">Cancel</a>
+              <input type="submit" value="apply" class="btn btn-success float-right">
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+  </div>
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="dist/js/adminlte.min.js"></script>
+  <script src="plugins/moment/moment.min.js"></script>
+  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <script>
+    jQuery(function($) {
+      $('#period').daterangepicker();
+    });
+  </script>
+</body>
+</html>

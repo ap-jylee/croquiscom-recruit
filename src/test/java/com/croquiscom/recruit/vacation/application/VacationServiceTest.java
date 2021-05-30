@@ -1,6 +1,5 @@
 package com.croquiscom.recruit.vacation.application;
 
-import com.croquiscom.recruit.vacation.domain.Vacation;
 import com.croquiscom.recruit.vacation.dto.VacationRequest;
 import com.croquiscom.recruit.vacation.dto.VacationResponse;
 import org.junit.jupiter.api.DisplayName;

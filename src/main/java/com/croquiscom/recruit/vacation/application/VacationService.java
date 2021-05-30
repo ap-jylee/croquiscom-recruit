@@ -1,7 +1,5 @@
 package com.croquiscom.recruit.vacation.application;
 
-import com.croquiscom.recruit.member.domain.Member;
-import com.croquiscom.recruit.member.domain.MemberRepository;
 import com.croquiscom.recruit.member.domain.MemberSetting;
 import com.croquiscom.recruit.member.domain.MemberSettingRepository;
 import com.croquiscom.recruit.vacation.domain.Vacation;

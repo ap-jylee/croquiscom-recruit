@@ -1,7 +1,5 @@
 package com.croquiscom.recruit.vacation.domain;
 
-import com.croquiscom.recruit.vacation.dto.VacationDateRange;
-import com.croquiscom.recruit.vacation.dto.VacationDateRanges;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

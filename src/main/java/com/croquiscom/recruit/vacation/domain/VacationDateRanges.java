@@ -1,5 +1,6 @@
-package com.croquiscom.recruit.vacation.dto;
+package com.croquiscom.recruit.vacation.domain;
 
+import com.croquiscom.recruit.vacation.dto.VacationRequest;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;

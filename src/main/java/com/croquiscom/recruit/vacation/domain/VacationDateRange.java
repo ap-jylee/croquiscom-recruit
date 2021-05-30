@@ -1,7 +1,8 @@
-package com.croquiscom.recruit.vacation.dto;
+package com.croquiscom.recruit.vacation.domain;
 
+import com.croquiscom.recruit.vacation.dto.VacationRequest;
+import com.croquiscom.recruit.vacation.dto.VacationResponse;
 import lombok.Getter;
-import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDate;
 

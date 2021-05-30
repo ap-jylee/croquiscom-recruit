@@ -245,11 +245,9 @@
         url: `/vacations/cancel/${row.vacationId}`,
         method: 'put',
         dataType: 'json'
-      })
-      .done(function () {
+      }).done(function () {
         location.reload();
-      })
-      .fail(function (error) {
+      }).fail(function (error) {
         alert(error.responseText);
       });
     });

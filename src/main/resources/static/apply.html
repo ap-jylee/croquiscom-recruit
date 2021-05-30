@@ -122,14 +122,14 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="period">period</label>
+                      <label for="date">date</label>
                       <div class="input-group">
                         <div class="input-group-prepend">
                         <span class="input-group-text">
                           <i class="far fa-calendar-alt"></i>
                         </span>
                         </div>
-                        <input type="text" class="form-control float-right" id="period">
+                        <input type="text" class="form-control float-right" id="date">
                       </div>
                     </div>
                     <div class="form-group">
@@ -164,15 +164,30 @@
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="plugins/moment/moment.min.js"></script>
+  <script src="plugins/moment-range/moment-range.js"></script>
   <script src="plugins/daterangepicker/daterangepicker.js"></script>
   <script src="plugins/jquery-serializeObject/jquery.serializeObject.min.js"></script>
   <script>
+    window['moment-range'].extendMoment(moment);
     jQuery(function($) {
       // local variable
-
+      const vacationTypeConfig = {
+        whole: {
+          singleDatePicker: false,
+          usedDays: 1
+        },
+        half: {
+          singleDatePicker: true,
+          usedDays: 0.5
+        },
+        quarter: {
+          singleDatePicker: true,
+          usedDays: 0.25
+        }
+      }
       // local method
       const getDateRangePickerData = function() {
-        const data = $('#period').data('daterangepicker');
+        const data = $('#date').data('daterangepicker');
         return {
           vacationStartDate: data.startDate.format('YYYYMMDD'),
           vacationEndDate: data.endDate.format('YYYYMMDD')
@@ -180,13 +195,33 @@
       }
       const loadIdentity = function () {
         $.getJSON('/members/identity', function(response) {
-          $('#remaingingDaysNumber').text(response.remainingVacationDays);
+          if (response.remainingVacationDays == 0) {
+            alert('There are no annual leave remaining.');
+            location.href = '/';
+            return;
+          }
+          $('#remaingingDaysNumber').text(response.remainingVacationDays).data('remainingVacationDays', response.remainingVacationDays);
           $('#remaingingDaysBar').width(`${response.remainingVacationDays / 15 * 100}%`);
           $('#remaingingDaysDescription').text(`An annual ${response.remainingVacationDays} days left.`);
         });
       }
+      const applyDaterangePicker = function (event, picker) {
+        const type = $('#vacationType').val();
+        if (type != 'whole') {
+          return;
+        }
+        const range = moment.range(picker.startDate, picker.endDate);
+        const usedDays = Array.from(range.by('days'))
+          .filter((date) => date.isoWeekday() <= 5)
+          .length;
+        const remainingVacationDays = $('#remaingingDaysNumber').data('remainingVacationDays');
+        $('#usedDays').val(usedDays);
+        $('#applyButton').attr('disabled', usedDays > remainingVacationDays);
+      }
       // ui
-      $('#period').daterangepicker();
+      $('#date').daterangepicker({
+        minDate: moment()
+      }).on('apply.daterangepicker', applyDaterangePicker);;
       // event handler
       $('#applyButton').click(function() {
         const formData = $('#applyForm').serializeObject();
@@ -194,9 +229,22 @@
         $.post({
           url: '/vacations',
           contentType: 'application/json',
-        }, JSON.stringify($.extend(formData, dateRangePickerData)), function(response) {
+        }, JSON.stringify($.extend(formData, dateRangePickerData))).done(() => {
           location.href = '/';
+        }).fail(function (error) {
+          alert(error.responseText);
         });
+      });
+      $('#vacationType').change(function () {
+        const type = $(this).val();
+        const config = vacationTypeConfig[type];
+        $('#date').daterangepicker({
+          minDate: moment(),
+          startDate: moment(),
+          endDate: moment(),
+          singleDatePicker: config.singleDatePicker
+        }).on('apply.daterangepicker', applyDaterangePicker);
+        $('#usedDays').val(config.usedDays);
       });
       // init
       loadIdentity();

@@ -21,9 +21,9 @@ public class VacationResponse {
     private Double usedDays;
     private String comment;
     private Boolean cancelYn;
-    @JsonFormat(pattern = "yyyy.MM.dd hh:mm")
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime createdDate;
-    @JsonFormat(pattern = "yyyy.MM.dd hh:mm")
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime modifiedDate;
 
     private Double remainingUsedDays;

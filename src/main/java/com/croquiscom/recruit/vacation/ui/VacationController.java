@@ -22,7 +22,7 @@ public class VacationController {
     public ResponseEntity<VacationResponse> createVacation(
             Authentication authentication,
             @RequestBody VacationRequest vacationRequest) {
-        VacationResponse vacationResponse = vacationService.createVacation(vacationRequest.setMemberIdFromAuthentication(authentication));
+        VacationResponse vacationResponse = vacationService.createVacation(authentication.getName(), vacationRequest);
         return ResponseEntity.created(URI.create("/vacations/" + vacationResponse.getVacationId())).body(vacationResponse);
     }
 
@@ -34,8 +34,9 @@ public class VacationController {
 
     @PutMapping("cancel/{id}")
     public ResponseEntity<VacationResponse> cancelVacation(
+            Authentication authentication,
             @PathVariable("id") Long vacationId) {
-        return ResponseEntity.ok().body(vacationService.cancelVacation(vacationId));
+        return ResponseEntity.ok().body(vacationService.cancelVacation(authentication.getName(), vacationId));
     }
 
     @ExceptionHandler(IllegalStateException.class)

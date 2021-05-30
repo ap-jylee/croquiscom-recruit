@@ -89,11 +89,11 @@
                 <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">remaining days</span>
-                  <span class="info-box-number">15</span>
+                  <span class="info-box-number" id="remaingingDaysNumber">-</span>
                   <div class="progress">
-                    <div class="progress-bar" style="width: 100%"></div>
+                    <div class="progress-bar" style="width: 0%" id="remaingingDaysBar"></div>
                   </div>
-                  <span class="progress-description">An annual 15 days left.</span>
+                  <span class="progress-description" id="remaingingDaysDescription">-</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -168,6 +168,9 @@
   <script src="plugins/jquery-serializeObject/jquery.serializeObject.min.js"></script>
   <script>
     jQuery(function($) {
+      // local variable
+
+      // local method
       const getDateRangePickerData = function() {
         const data = $('#period').data('daterangepicker');
         return {
@@ -175,7 +178,16 @@
           vacationEndDate: data.endDate.format('YYYYMMDD')
         };
       }
+      const loadIdentity = function () {
+        $.getJSON('/members/identity', function(response) {
+          $('#remaingingDaysNumber').text(response.remainingVacationDays);
+          $('#remaingingDaysBar').width(`${response.remainingVacationDays / 15 * 100}%`);
+          $('#remaingingDaysDescription').text(`An annual ${response.remainingVacationDays} days left.`);
+        });
+      }
+      // ui
       $('#period').daterangepicker();
+      // event handler
       $('#applyButton').click(function() {
         const formData = $('#applyForm').serializeObject();
         const dateRangePickerData = getDateRangePickerData();
@@ -186,6 +198,8 @@
           location.href = '/';
         });
       });
+      // init
+      loadIdentity();
     });
   </script>
 </body>

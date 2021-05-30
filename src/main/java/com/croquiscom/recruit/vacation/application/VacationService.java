@@ -1,5 +1,9 @@
 package com.croquiscom.recruit.vacation.application;
 
+import com.croquiscom.recruit.member.domain.Member;
+import com.croquiscom.recruit.member.domain.MemberRepository;
+import com.croquiscom.recruit.member.domain.MemberSetting;
+import com.croquiscom.recruit.member.domain.MemberSettingRepository;
 import com.croquiscom.recruit.vacation.domain.Vacation;
 import com.croquiscom.recruit.vacation.domain.VacationRepository;
 import com.croquiscom.recruit.vacation.dto.VacationRequest;
@@ -17,11 +21,15 @@ import java.util.stream.Collectors;
 public class VacationService {
 
     private final VacationRepository vacationRepository;
+    private final MemberSettingRepository memberSettingRepository;
 
     @Transactional
-    public VacationResponse createVacation(VacationRequest request) {
-        Vacation persistVacation = vacationRepository.save(request.toVacation());
-        return VacationResponse.of(persistVacation);
+    public VacationResponse createVacation(String memberId, VacationRequest request) {
+        MemberSetting persistMemberSetting = memberSettingRepository.findById(memberId).orElseThrow();
+        persistMemberSetting.useVacationDays(request);
+        Vacation persistVacation = vacationRepository.save(request.toVacation(memberId));
+        return VacationResponse.of(persistVacation)
+                .setRemainingUsedDays(persistMemberSetting);
     }
 
     public List<VacationResponse> findAllByMemberId(String memberId) {
@@ -32,9 +40,12 @@ public class VacationService {
     }
 
     @Transactional
-    public VacationResponse cancelVacation(Long vacationId) {
-        Vacation vacation = vacationRepository.findById(vacationId).orElseThrow();
-        return VacationResponse.of(vacation.cancel());
+    public VacationResponse cancelVacation(String memberId, Long vacationId) {
+        Vacation persistVacation = vacationRepository.findById(vacationId).orElseThrow();
+        MemberSetting persistMemberSetting = memberSettingRepository.findById(memberId).orElseThrow();
+        persistMemberSetting.cancelVacationDays(persistVacation);
+        return VacationResponse.of(persistVacation.cancel())
+                .setRemainingUsedDays(persistMemberSetting);
 
     }
 

@@ -2,6 +2,7 @@ package com.croquiscom.recruit.member.application;
 
 import com.croquiscom.recruit.member.domain.Member;
 import com.croquiscom.recruit.member.domain.MemberRepository;
+import com.croquiscom.recruit.member.dto.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +29,11 @@ public class MemberService implements UserDetailsService {
         GrantedAuthority role = new SimpleGrantedAuthority("ROLE_USER");
         authorities.add(role);
         return new User(member.getId(), member.getPassword(), authorities);
+    }
+
+    public MemberResponse getMember(String memberId) {
+        Member persistMember = memberRepository.findById(memberId).orElseThrow();
+        return MemberResponse.of(persistMember);
     }
 
 }

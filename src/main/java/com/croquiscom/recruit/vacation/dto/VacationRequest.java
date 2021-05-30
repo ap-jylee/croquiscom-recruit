@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
 
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class VacationRequest {
 
-    private String memberId;
     private String vacationType;
     @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate vacationStartDate;
@@ -23,7 +21,7 @@ public class VacationRequest {
     private Integer usedDays;
     private String comment;
 
-    public Vacation toVacation() {
+    public Vacation toVacation(String memberId) {
         return Vacation.builder()
                 .memberId(memberId)
                 .vacationType(vacationType)
@@ -33,11 +31,6 @@ public class VacationRequest {
                 .comment(comment)
                 .cancelYn(false)
                 .build();
-    }
-
-    public VacationRequest setMemberIdFromAuthentication(Authentication authentication) {
-        memberId = authentication.getName();
-        return this;
     }
 
 }

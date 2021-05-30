@@ -1,5 +1,6 @@
 package com.croquiscom.recruit.vacation.dto;
 
+import com.croquiscom.recruit.member.domain.MemberSetting;
 import com.croquiscom.recruit.vacation.domain.Vacation;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class VacationResponse {
     @JsonFormat(pattern = "yyyy.MM.dd hh:mm")
     private LocalDateTime modifiedDate;
 
+    private Integer remainingUsedDays;
+
     private VacationResponse(Long vacationId, String memberId, String vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Integer usedDays, String comment, Boolean cancelYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.vacationId = vacationId;
         this.memberId = memberId;
@@ -40,6 +43,15 @@ public class VacationResponse {
 
     public static VacationResponse of(Vacation vacation) {
         return new VacationResponse(vacation.getVacationId(), vacation.getMemberId(), vacation.getVacationType(), vacation.getVacationStartDate(), vacation.getVacationEndDate(), vacation.getUsedDays(), vacation.getComment(), vacation.getCancelYn(), vacation.getCreatedDate(), vacation.getModifiedDate());
+    }
+
+    public VacationResponse setRemainingUsedDays(MemberSetting memberSetting) {
+        return setRemainingUsedDays(memberSetting.getRemainingVacationDays());
+    }
+
+    public VacationResponse setRemainingUsedDays(Integer remainingUsedDays) {
+        this.remainingUsedDays = remainingUsedDays;
+        return this;
     }
 
 }

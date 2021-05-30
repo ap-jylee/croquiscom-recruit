@@ -91,11 +91,11 @@
                 <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">remaining days</span>
-                  <span class="info-box-number">15</span>
+                  <span class="info-box-number" id="remaingingDaysNumber">-</span>
                   <div class="progress">
-                    <div class="progress-bar" style="width: 100%"></div>
+                    <div class="progress-bar" style="width: 0%" id="remaingingDaysBar"></div>
                   </div>
-                  <span class="progress-description">An annual 15 days left.</span>
+                  <span class="progress-description" id="remaingingDaysDescription">-</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -183,6 +183,7 @@
   <script src="plugins/moment/moment.min.js"></script>
   <script>
   jQuery(function($) {
+    // local variable
     const table = $('#table').DataTable({
       serverSide: true,
       processing: true,
@@ -192,23 +193,35 @@
       ordering: false,
       paging: false,
       searching: false,
-      ajax: function(data, callback) {
-        $.getJSON('/vacations', function(response) {
-          response.forEach((content) => {
-            console.log(content);
-            content.title = `vacation application - ${content.vacationType} (${content.vacationStartDate} ~ ${content.vacationEndDate})`;
-          });
-          callback({ draw: data.draw, data: response });
-        })
+      ajax: {
+        url: '/vacations',
+        dataSrc: null
       },
       columns: [
         { data: 'vacationId' },
-        { data: 'title' },
+        {
+          data: null,
+          render: (data, type, row) => `vacation application - ${row.vacationType} (${row.vacationStartDate} ~ ${row.vacationEndDate})`
+        },
         { data: 'usedDays' },
-        { data: 'cancelYn' },
+        {
+          data: 'cancelYn',
+          render: (data) => data ? 'Y' : 'N'
+        },
         { data: 'createdDate' }
       ]
     });
+    // local method
+    const loadIdentity = function () {
+      $.getJSON('/members/identity', function(response) {
+        $('#remaingingDaysNumber').text(response.remainingVacationDays);
+        $('#remaingingDaysBar').width(`${response.remainingVacationDays / 15 * 100}%`);
+        $('#remaingingDaysDescription').text(`An annual ${response.remainingVacationDays} days left.`);
+      });
+    }
+    //ui
+
+    // event handler
     $('#table tbody').on('click', 'tr', function () {
       const row = table.row(this).data();
       $('#vacationType').val(row.vacationType);
@@ -240,6 +253,8 @@
         alert(error.responseText);
       });
     });
+    // init
+    loadIdentity();
   });
   </script>
 </body>

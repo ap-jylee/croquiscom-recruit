@@ -25,11 +25,11 @@ public class VacationServiceTest {
         request.setVacationType("whole");
         request.setVacationStartDate(LocalDate.of(2021, 6, 1));
         request.setVacationEndDate(LocalDate.of(2021, 6, 4));
-        request.setUsedDays(4);
+        request.setUsedDays(4D);
         request.setComment("asdf");
         VacationResponse actual = vacationService.createVacation("user", request);
         assertThat(actual.getVacationId()).isNotNull();
-        assertThat(actual.getRemainingUsedDays()).isEqualTo(11);
+        assertThat(actual.getRemainingUsedDays()).isEqualTo(11D);
     }
 
     @DisplayName("cancel vacation")
@@ -37,7 +37,7 @@ public class VacationServiceTest {
     public void cancelVacation() {
         createVacation();
         VacationResponse actual = vacationService.cancelVacation("user", 1L);
-        assertThat(actual.getRemainingUsedDays()).isEqualTo(15);
+        assertThat(actual.getRemainingUsedDays()).isEqualTo(15D);
     }
 
 }

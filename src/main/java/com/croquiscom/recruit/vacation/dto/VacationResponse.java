@@ -18,7 +18,7 @@ public class VacationResponse {
     private LocalDate vacationStartDate;
     @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate vacationEndDate;
-    private Integer usedDays;
+    private Double usedDays;
     private String comment;
     private Boolean cancelYn;
     @JsonFormat(pattern = "yyyy.MM.dd hh:mm")
@@ -26,9 +26,9 @@ public class VacationResponse {
     @JsonFormat(pattern = "yyyy.MM.dd hh:mm")
     private LocalDateTime modifiedDate;
 
-    private Integer remainingUsedDays;
+    private Double remainingUsedDays;
 
-    private VacationResponse(Long vacationId, String memberId, String vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Integer usedDays, String comment, Boolean cancelYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private VacationResponse(Long vacationId, String memberId, String vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Double usedDays, String comment, Boolean cancelYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.vacationId = vacationId;
         this.memberId = memberId;
         this.vacationType = vacationType;
@@ -49,7 +49,7 @@ public class VacationResponse {
         return setRemainingUsedDays(memberSetting.getRemainingVacationDays());
     }
 
-    public VacationResponse setRemainingUsedDays(Integer remainingUsedDays) {
+    public VacationResponse setRemainingUsedDays(Double remainingUsedDays) {
         this.remainingUsedDays = remainingUsedDays;
         return this;
     }

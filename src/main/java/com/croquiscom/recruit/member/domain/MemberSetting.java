@@ -19,7 +19,7 @@ public class MemberSetting extends BaseEntity {
     @Column(name = "id")
     private String id;
     @Column(name = "remaining_vacation_days")
-    private Integer remainingVacationDays;
+    private Double remainingVacationDays;
 
     public MemberSetting useVacationDays(VacationRequest vacationRequest) {
         if (remainingVacationDays < vacationRequest.getUsedDays()) {

@@ -13,9 +13,9 @@ public class MemberResponse {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    private Integer remainingVacationDays;
+    private Double remainingVacationDays;
 
-    private MemberResponse(String id, String password, LocalDateTime createdDate, LocalDateTime modifiedDate, Integer remainingVacationDays) {
+    private MemberResponse(String id, String password, LocalDateTime createdDate, LocalDateTime modifiedDate, Double remainingVacationDays) {
         this.id = id;
         this.password = password;
         this.createdDate = createdDate;

@@ -18,7 +18,7 @@ public class VacationRequest {
     private LocalDate vacationStartDate;
     @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate vacationEndDate;
-    private Integer usedDays;
+    private Double usedDays;
     private String comment;
 
     public Vacation toVacation(String memberId) {

@@ -9,7 +9,7 @@ public class MemberMock {
 
     private String id;
     private String password;
-    private Integer remainingVacationDays;
+    private Double remainingVacationDays;
 
     private MemberMock() {
 
@@ -28,7 +28,7 @@ public class MemberMock {
     }
 
     public Boolean isFullRemainingVacationDays() {
-        return remainingVacationDays == MemberSettingConfig.TOTAL_VACATION_DAYS;
+        return remainingVacationDays.equals(MemberSettingConfig.TOTAL_VACATION_DAYS);
     }
 
 }

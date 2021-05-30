@@ -20,7 +20,7 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "id")
     private MemberSetting memberSetting;
 
-    public Integer getRemainingVacationDays() {
+    public Double getRemainingVacationDays() {
         return memberSetting.getRemainingVacationDays();
     }
 

@@ -26,6 +26,7 @@ public class VacationService {
     @Transactional
     public VacationResponse createVacation(String memberId, VacationRequest request) {
         VacationDateRanges vacationDateRanges = new VacationDateRanges(findAllByMemberId(memberId).stream()
+                .filter(VacationResponse::isDateRangeTarget)
                 .map(VacationDateRange::new)
                 .collect(Collectors.toList()));
         vacationDateRanges.checkOverlap(request);

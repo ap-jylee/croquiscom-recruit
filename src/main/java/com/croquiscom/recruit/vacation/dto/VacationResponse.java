@@ -55,4 +55,8 @@ public class VacationResponse {
         return this;
     }
 
+    public Boolean isDateRangeTarget() {
+        return !cancelYn;
+    }
+
 }

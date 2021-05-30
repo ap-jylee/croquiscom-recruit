@@ -21,7 +21,7 @@ public class Vacation extends BaseEntity {
     @Column(name = "member_id")
     private String memberId;
     @Column(name = "vacation_type")
-    private String vacationType;
+    private VacationType vacationType;
     @Column(name = "vacation_start_date")
     private LocalDate vacationStartDate;
     @Column(name = "vacation_end_date")
@@ -34,7 +34,7 @@ public class Vacation extends BaseEntity {
     private Boolean cancelYn;
 
     @Builder
-    public Vacation(Long vacationId, String memberId, String vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Double usedDays, String comment, Boolean cancelYn) {
+    public Vacation(Long vacationId, String memberId, VacationType vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Double usedDays, String comment, Boolean cancelYn) {
         this.vacationId = vacationId;
         this.memberId = memberId;
         this.vacationType = vacationType;

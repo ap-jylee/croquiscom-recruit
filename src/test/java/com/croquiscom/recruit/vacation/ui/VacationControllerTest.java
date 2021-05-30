@@ -48,7 +48,7 @@ public class VacationControllerTest {
 
     private Map<String, String> makeParam() {
         Map<String, String> params = new HashMap<>();
-        params.put("vacationType", "whole");
+        params.put("vacationType", "WHOLE");
         params.put("vacationStartDate", "20210601");
         params.put("vacationEndDate", "20210604");
         params.put("usedDays", "4");

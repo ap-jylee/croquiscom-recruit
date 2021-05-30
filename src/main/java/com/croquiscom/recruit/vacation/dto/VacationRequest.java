@@ -1,6 +1,7 @@
 package com.croquiscom.recruit.vacation.dto;
 
 import com.croquiscom.recruit.vacation.domain.Vacation;
+import com.croquiscom.recruit.vacation.domain.VacationType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class VacationRequest {
 
-    private String vacationType;
+    private VacationType vacationType;
     @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate vacationStartDate;
     @JsonFormat(pattern = "yyyyMMdd")

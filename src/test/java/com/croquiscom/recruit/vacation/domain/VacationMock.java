@@ -17,5 +17,6 @@ public class VacationMock {
     private Boolean cancelYn;
     private String createdDate;
     private String modifiedDate;
+    private Double remainingUsedDays;
 
 }

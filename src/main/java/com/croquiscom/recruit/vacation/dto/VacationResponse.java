@@ -2,6 +2,7 @@ package com.croquiscom.recruit.vacation.dto;
 
 import com.croquiscom.recruit.member.domain.MemberSetting;
 import com.croquiscom.recruit.vacation.domain.Vacation;
+import com.croquiscom.recruit.vacation.domain.VacationType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
@@ -13,7 +14,7 @@ public class VacationResponse {
 
     private Long vacationId;
     private String memberId;
-    private String vacationType;
+    private VacationType vacationType;
     @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate vacationStartDate;
     @JsonFormat(pattern = "yyyy.MM.dd")
@@ -28,7 +29,7 @@ public class VacationResponse {
 
     private Double remainingUsedDays;
 
-    private VacationResponse(Long vacationId, String memberId, String vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Double usedDays, String comment, Boolean cancelYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private VacationResponse(Long vacationId, String memberId, VacationType vacationType, LocalDate vacationStartDate, LocalDate vacationEndDate, Double usedDays, String comment, Boolean cancelYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.vacationId = vacationId;
         this.memberId = memberId;
         this.vacationType = vacationType;

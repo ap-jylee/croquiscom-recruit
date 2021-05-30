@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class VacationController {
     @PostMapping
     public ResponseEntity<VacationResponse> createVacation(
             Authentication authentication,
-            @RequestBody VacationRequest vacationRequest) {
+            @RequestBody @Valid VacationRequest vacationRequest) {
         VacationResponse vacationResponse = vacationService.createVacation(authentication.getName(), vacationRequest);
         return ResponseEntity.created(URI.create("/vacations/" + vacationResponse.getVacationId())).body(vacationResponse);
     }

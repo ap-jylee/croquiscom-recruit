@@ -4,8 +4,7 @@ import com.croquiscom.recruit.member.domain.MemberSetting;
 import com.croquiscom.recruit.member.domain.MemberSettingRepository;
 import com.croquiscom.recruit.vacation.domain.Vacation;
 import com.croquiscom.recruit.vacation.domain.VacationRepository;
-import com.croquiscom.recruit.vacation.dto.VacationRequest;
-import com.croquiscom.recruit.vacation.dto.VacationResponse;
+import com.croquiscom.recruit.vacation.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,10 @@ public class VacationService {
 
     @Transactional
     public VacationResponse createVacation(String memberId, VacationRequest request) {
+        VacationDateRanges vacationDateRanges = new VacationDateRanges(findAllByMemberId(memberId).stream()
+                .map(VacationDateRange::new)
+                .collect(Collectors.toList()));
+        vacationDateRanges.checkOverlap(request);
         MemberSetting persistMemberSetting = memberSettingRepository.findById(memberId).orElseThrow();
         persistMemberSetting.useVacationDays(request);
         Vacation persistVacation = vacationRepository.save(request.toVacation(memberId));

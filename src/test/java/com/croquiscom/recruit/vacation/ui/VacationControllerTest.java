@@ -46,6 +46,22 @@ public class VacationControllerTest {
         assertThat(response.header("Location")).isNotBlank();
     }
 
+    @DisplayName("create vacation - bad request")
+    @Test
+    public void createVacationThrowException() {
+        // given
+        Map<String, String> params = new HashMap<>();
+//        params.put("vacationType", "WHOLE");
+        params.put("vacationStartDate", "20210601");
+        params.put("vacationEndDate", "20210604");
+        params.put("usedDays", "4");
+        params.put("comment", "asdf");
+        // when
+        ExtractableResponse<Response> response = createVacation(params);
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
     private Map<String, String> makeParam() {
         Map<String, String> params = new HashMap<>();
         params.put("vacationType", "WHOLE");
